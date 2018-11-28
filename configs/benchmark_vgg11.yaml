@@ -1,5 +1,5 @@
 trainer: basic
-output_dir: $SCRATCH/pytorch-benchmarks/vgg11
+output_dir: $SCRATCH/pytorch-benchmarks/v0.4.1/vgg11
 
 data_config:
     name: dummy
