@@ -15,6 +15,12 @@ def get_model(name, **model_args):
     elif name == 'dcgan':
         from .dcgan import get_gan
         return get_gan(**model_args)
+    elif name == 'alexnet':
+        import torchvision
+        return torchvision.models.alexnet(**model_args)
+    elif name == 'vgg11':
+        import torchvision
+        return torchvision.models.vgg11(**model_args)
     elif name == 'resnet50':
         import torchvision
         return torchvision.models.resnet50(**model_args)
