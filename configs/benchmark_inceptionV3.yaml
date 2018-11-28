@@ -1,5 +1,5 @@
 trainer: basic
-output_dir: $SCRATCH/pytorch-examples/benchmarks/inceptionV3
+output_dir: $SCRATCH/pytorch-benchmarks/inceptionV3
 
 data_config:
     name: dummy
