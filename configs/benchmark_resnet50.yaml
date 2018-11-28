@@ -1,5 +1,5 @@
 trainer: basic
-output_dir: $SCRATCH/pytorch-resnet50/output
+output_dir: $SCRATCH/pytorch-examples/benchmark/resnet50
 
 data_config:
     name: dummy
