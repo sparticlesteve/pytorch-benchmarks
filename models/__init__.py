@@ -18,7 +18,7 @@ def get_model(name, **model_args):
     elif name == 'resnet50':
         import torchvision
         return torchvision.models.resnet50(**model_args)
-    elif name == 'inception_v3':
+    elif name == 'inceptionV3':
         import torchvision
         return torchvision.models.inception_v3(**model_args)
     else:
