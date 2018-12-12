@@ -1,0 +1,20 @@
+trainer: basic
+output_dir: $SCRATCH/pytorch-benchmarks/v0.4.1/cnn3d
+
+data_config:
+    name: dummy
+    n_train: 16 #1024
+    n_valid: 16 #1024
+    input_shape: [1, 32, 32, 32]
+    n_classes: 4
+
+model_config:
+    model_type: cnn3d
+    input_shape: [1, 32, 32, 32]
+    output_size: 4
+    optimizer: 'Adam'
+    learning_rate: 0.001
+
+train_config:
+    batch_size: 16
+    n_epochs: 1
