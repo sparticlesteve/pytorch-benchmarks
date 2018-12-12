@@ -27,5 +27,8 @@ def get_model(name, **model_args):
     elif name == 'inceptionV3':
         import torchvision
         return torchvision.models.inception_v3(**model_args)
+    elif name == 'lstm':
+        from .rnn_classifier import LSTMClassifier
+        return LSTMClassifier(**model_args)
     else:
         raise Exception('Model %s unknown' % name)

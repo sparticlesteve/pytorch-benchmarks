@@ -1,0 +1,21 @@
+trainer: basic
+output_dir: $SCRATCH/pytorch-benchmarks/v0.4.1/lstm
+
+data_config:
+    name: dummy
+    n_train: 1024
+    n_valid: 1024
+    input_shape: [50, 500] # (seq_size, input_size)
+    n_classes: 4
+
+model_config:
+    model_type: lstm
+    input_size: 500
+    hidden_size: 500
+    n_classes: 4
+    optimizer: 'Adam'
+    learning_rate: 0.001
+
+train_config:
+    batch_size: 64
+    n_epochs: 8
