@@ -1,5 +1,5 @@
 trainer: basic
-output_dir: $SCRATCH/pytorch-benchmarks/v0.4.1/lstm
+output_dir: $SCRATCH/pytorch-benchmarks/${BENCHMARK_VERSION}/lstm
 
 data_config:
     name: dummy

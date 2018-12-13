@@ -1,5 +1,5 @@
 trainer: basic
-output_dir: $SCRATCH/pytorch-benchmarks/v0.4.1/cnn3d
+output_dir: $SCRATCH/pytorch-benchmarks/${BENCHMARK_VERSION}/cnn3d
 
 data_config:
     name: dummy
