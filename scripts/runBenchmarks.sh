@@ -7,6 +7,7 @@
 
 . setup.sh
 module list
+which python
 
 srun python ./train.py configs/benchmark_alexnet.yaml
 srun python ./train.py configs/benchmark_vgg11.yaml
