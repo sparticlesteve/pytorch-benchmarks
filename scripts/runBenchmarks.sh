@@ -9,9 +9,9 @@
 module list
 which python
 
-srun python ./train.py configs/benchmark_alexnet.yaml
-srun python ./train.py configs/benchmark_vgg11.yaml
-srun python ./train.py configs/benchmark_resnet50.yaml
-srun python ./train.py configs/benchmark_inceptionV3.yaml
-srun python ./train.py configs/benchmark_lstm.yaml
-srun python ./train.py configs/benchmark_cnn3d.yaml
+srun python ./train.py configs/alexnet.yaml
+srun python ./train.py configs/vgg11.yaml
+srun python ./train.py configs/resnet50.yaml
+srun python ./train.py configs/inceptionV3.yaml
+srun python ./train.py configs/lstm.yaml
+srun python ./train.py configs/cnn3d.yaml
