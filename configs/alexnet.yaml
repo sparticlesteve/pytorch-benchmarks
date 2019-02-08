@@ -1,5 +1,5 @@
 trainer: basic
-output_dir: $SCRATCH/pytorch-benchmarks/${BENCHMARK_VERSION}/alexnet
+output_dir: $BENCHMARK_RESULTS_PATH/alexnet
 
 data_config:
     name: dummy
