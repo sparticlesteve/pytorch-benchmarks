@@ -7,6 +7,7 @@ data_config:
     n_valid: 1024
     input_shape: [1, 32, 32, 32]
     n_classes: 4
+    batch_size: 64
 
 model_config:
     model_type: cnn3d
@@ -16,5 +17,4 @@ model_config:
     learning_rate: 0.001
 
 train_config:
-    batch_size: 64
     n_epochs: 1
