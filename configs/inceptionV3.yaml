@@ -8,6 +8,8 @@ data_config:
     input_shape: [3, 299, 299]
     n_classes: 1000
     batch_size: 128
+    use_dist_sampler_train: false
+    use_dist_sampler_valid: false
 
 model_config:
     model_type: inceptionV3
