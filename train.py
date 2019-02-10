@@ -88,16 +88,16 @@ def main():
         trainer.write_summaries()
 
     # Print some conclusions
-    n_train_samples = len(train_data_loader.sampler)
     logging.info('Finished training')
-    train_time = np.mean(summary['train_time'])
     logging.info('Train samples %g time %g s rate %g samples/s',
-                 n_train_samples, train_time, n_train_samples / train_time)
+                 np.mean(summary['train_samples']),
+                 np.mean(summary['train_time']),
+                 np.mean(summary['train_rate']))
     if valid_data_loader is not None:
-        n_valid_samples = len(valid_data_loader.sampler)
-        valid_time = np.mean(summary['valid_time'])
         logging.info('Valid samples %g time %g s rate %g samples/s',
-                     n_valid_samples, valid_time, n_valid_samples / valid_time)
+                     np.mean(summary['valid_samples']),
+                     np.mean(summary['valid_time']),
+                     np.mean(summary['valid_rate']))
 
     # Drop to IPython interactive shell
     if args.interactive and rank==0:

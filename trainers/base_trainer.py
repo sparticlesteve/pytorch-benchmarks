@@ -81,11 +81,15 @@ class BaseTrainer(object):
             start_time = time.time()
             summary.update(self.train_epoch(train_data_loader))
             summary['train_time'] = time.time() - start_time
+            summary['train_samples'] = len(train_data_loader.sampler)
+            summary['train_rate'] = summary['train_samples'] / summary['train_time']
             # Evaluate on this epoch
             if valid_data_loader is not None:
                 start_time = time.time()
                 summary.update(self.evaluate(valid_data_loader))
                 summary['valid_time'] = time.time() - start_time
+                summary['valid_samples'] = len(valid_data_loader.sampler)
+                summary['valid_rate'] = summary['valid_samples'] / summary['valid_time']
             # Save summary, checkpoint
             self.save_summary(summary)
             if self.output_dir is not None and self.rank==0:
