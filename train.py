@@ -55,13 +55,13 @@ def main():
     train_config = config['train_config']
 
     # Prepare output directory
-    output_dir = config.get('output_dir', None) if rank==0 else None
+    output_dir = config.get('output_dir', None)
     if output_dir is not None:
         output_dir = os.path.expandvars(output_dir)
         os.makedirs(output_dir, exist_ok=True)
 
     # Setup logging
-    log_file = (os.path.join(output_dir, 'out.log')
+    log_file = (os.path.join(output_dir, 'out_%i.log' % rank)
                 if output_dir is not None else None)
     config_logging(verbose=args.verbose, log_file=log_file)
     logging.info('Initialized rank %i out of %i', rank, n_ranks)
@@ -74,7 +74,7 @@ def main():
 
     # Load the trainer
     trainer = get_trainer(name=config['trainer'], distributed=args.distributed,
-                          output_dir=output_dir, device=args.device)
+                          rank=rank, output_dir=output_dir, device=args.device)
     # Build the model
     trainer.build_model(**model_config)
     if rank == 0:
@@ -84,7 +84,7 @@ def main():
     summary = trainer.train(train_data_loader=train_data_loader,
                             valid_data_loader=valid_data_loader,
                             **train_config)
-    if rank == 0:
+    if output_dir is not None:
         trainer.write_summaries()
 
     # Print some conclusions
