@@ -3,7 +3,7 @@
 #SBATCH -C knl
 #SBATCH -q debug
 #SBATCH -t 30
-#SBATCH -J knl-bm
+#SBATCH -J pytorch-bm-knl
 #SBATCH -o logs/%x-%j.out
 
 # Configuration

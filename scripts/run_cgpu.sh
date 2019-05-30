@@ -4,7 +4,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH -c 10
 #SBATCH -t 30
-#SBATCH -J cgpu-bm
+#SBATCH -J pytorch-bm-cgpu
 #SBATCH -o logs/%x-%j.out
 
 # Configuration

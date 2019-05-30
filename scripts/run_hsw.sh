@@ -3,7 +3,7 @@
 #SBATCH -C haswell
 #SBATCH -q debug
 #SBATCH -t 30
-#SBATCH -J hsw-bm
+#SBATCH -J pytorch-bm-hsw
 #SBATCH -o logs/%x-%j.out
 
 # Configuration
