@@ -10,8 +10,8 @@
 export OMP_NUM_THREADS=32
 export KMP_AFFINITY="granularity=fine,compact,1,0"
 export KMP_BLOCKTIME=1
-export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/cori-hsw/N${SLURM_JOB_NUM_NODES}/v1.0.0-intel
-module load pytorch/v1.0.0-intel
+export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/cori-hsw/N${SLURM_JOB_NUM_NODES}/v1.1.0
+module load pytorch/v1.1.0
 
 srun python train.py -d configs/alexnet.yaml
 srun python train.py -d configs/vgg11.yaml
