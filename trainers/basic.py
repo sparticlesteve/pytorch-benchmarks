@@ -33,9 +33,10 @@ class BasicTrainer(BaseTrainer):
         self.model.train()
         summary = dict()
         sum_loss = 0
+        self.logger.debug(' Model sumw: %.4f',
+                          sum(p.sum() for p in self.model.parameters()))
         # Loop over training batches
         for i, (batch_input, batch_target) in enumerate(data_loader):
-            self.logger.debug('  batch %i', i)
             batch_input = batch_input.to(self.device)
             batch_target = batch_target.to(self.device)
             self.model.zero_grad()
@@ -43,10 +44,14 @@ class BasicTrainer(BaseTrainer):
             batch_loss = self.loss_func(batch_output, batch_target)
             batch_loss.backward()
             self.optimizer.step()
-            sum_loss += batch_loss.item()
+            loss = batch_loss.item()
+            sum_loss += loss
+            self.logger.debug(' batch %i loss %.3f', i, loss)
         summary['train_loss'] = sum_loss / (i + 1)
         self.logger.debug(' Processed %i batches' % (i + 1))
-        self.logger.info('  Training loss: %.3f' % summary['train_loss'])
+        self.logger.info('  Training loss: %.4f' % summary['train_loss'])
+        self.logger.debug(' Model sumw: %.4f',
+                          sum(p.sum() for p in self.model.parameters()))
         return summary
 
     @torch.no_grad()
@@ -58,19 +63,21 @@ class BasicTrainer(BaseTrainer):
         sum_correct = 0
         # Loop over batches
         for i, (batch_input, batch_target) in enumerate(data_loader):
-            self.logger.debug(' batch %i', i)
             batch_input = batch_input.to(self.device)
             batch_target = batch_target.to(self.device)
             batch_output = self.model(batch_input)
-            sum_loss += self.loss_func(batch_output, batch_target).item()
+            loss = self.loss_func(batch_output, batch_target).item()
+            sum_loss += loss
             # Count number of correct predictions
             _, batch_preds = torch.max(batch_output, 1)
-            sum_correct += (batch_preds == batch_target).sum().item()
+            n_correct = (batch_preds == batch_target).sum().item()
+            sum_correct += n_correct
+            self.logger.debug(' batch %i loss %.3f correct %i', i, loss, n_correct)
         summary['valid_loss'] = sum_loss / (i + 1)
         summary['valid_acc'] = sum_correct / len(data_loader.sampler)
         self.logger.debug(' Processed %i samples in %i batches',
                           len(data_loader.sampler), i + 1)
-        self.logger.info('  Validation loss: %.3f acc: %.3f' %
+        self.logger.info('  Validation loss: %.4f acc: %.4f' %
                          (summary['valid_loss'], summary['valid_acc']))
         return summary
 
