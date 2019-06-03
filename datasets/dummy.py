@@ -23,7 +23,7 @@ def get_datasets(n_train=1024, n_valid=1024,
     else:
         train_y = torch.randn([n_train] + target_shape)
         valid_y = torch.randn([n_valid] + target_shape)
-    torch.manual_seed(initial_seed)
+    torch.manual_seed(initial_seed & ((1<<63)-1)) # suppressing overflow error
     train_dataset = TensorDataset(train_x, train_y)
     valid_dataset = TensorDataset(valid_x, valid_y)
     return train_dataset, valid_dataset
