@@ -1,10 +1,13 @@
 #!/bin/bash
 
-args="-J hsw-scaling -C haswell -d singleton"
-sbatch $args -N 1 -q debug -t 30 scripts/run_hsw.sh
-sbatch $args -N 2 -q debug -t 30 scripts/run_hsw.sh
-sbatch $args -N 4 -q debug -t 30 scripts/run_hsw.sh
-sbatch $args -N 8 -q debug -t 30 scripts/run_hsw.sh
-sbatch $args -N 16 -q debug -t 30 scripts/run_hsw.sh
-sbatch $args -N 32 -q debug -t 30 scripts/run_hsw.sh
-sbatch $args -N 64 -q debug -t 30 scripts/run_hsw.sh
+sbatch -d singleton -N 1 scripts/run_hsw.sh
+sbatch -d singleton -N 2 scripts/run_hsw.sh
+sbatch -d singleton -N 4 scripts/run_hsw.sh
+sbatch -d singleton -N 8 scripts/run_hsw.sh
+sbatch -d singleton -N 16 scripts/run_hsw.sh
+
+sbatch -d singleton -N 32 scripts/run_hsw.sh
+sbatch -d singleton -N 64 scripts/run_hsw.sh
+
+sbatch -d singleton -N 128 -q regular scripts/run_hsw.sh
+sbatch -d singleton -N 256 -q regular scripts/run_hsw.sh
