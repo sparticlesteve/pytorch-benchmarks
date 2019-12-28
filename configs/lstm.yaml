@@ -1,4 +1,4 @@
-trainer: basic
+trainer: generic
 output_dir: $BENCHMARK_RESULTS_PATH/lstm
 
 data_config:

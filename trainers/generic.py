@@ -7,14 +7,14 @@ import torch
 from torch import nn
 
 # Locals
-from .base_trainer import BaseTrainer
+from .base import BaseTrainer
 from models import get_model
 
-class BasicTrainer(BaseTrainer):
+class GenericTrainer(BaseTrainer):
     """Trainer code for basic classification problems."""
 
     def __init__(self, **kwargs):
-        super(BasicTrainer, self).__init__(**kwargs)
+        super(GenericTrainer, self).__init__(**kwargs)
 
     def build_model(self, model_type='cnn_classifier',
                     optimizer='Adam', learning_rate=0.001,
@@ -82,5 +82,5 @@ class BasicTrainer(BaseTrainer):
         return summary
 
 def _test():
-    t = BasicTrainer(output_dir='./')
+    t = GenericTrainer(output_dir='./')
     t.build_model()
