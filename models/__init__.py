@@ -6,14 +6,11 @@ def get_model(name, **model_args):
     """
     Top-level factory function for getting your models.
     """
-    if name == 'resnet50_cifar10':
-        from .resnet_cifar10 import ResNet50
-        return ResNet50(**model_args)
-    elif name == 'cnn_classifier':
-        from .cnn_classifier import CNNClassifier
-        return CNNClassifier(**model_args)
+    if name == 'cnn2d':
+        from .cnn2d import CNN2D
+        return CNN2D(**model_args)
     elif name == 'cnn3d':
-        from .cnn_classifier import CNN3D
+        from .cnn3d import CNN3D
         return CNN3D(**model_args)
     elif name == 'dcgan':
         from .dcgan import get_gan

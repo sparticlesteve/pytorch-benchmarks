@@ -1,19 +1,19 @@
 """
-This module contains PyTorch model code for the HEP-CNN
-RPV classifier.
+This module defines a generic 2D CNN model.
 """
 
 # Externals
 import torch.nn as nn
 
-class HEPCNNClassifier(nn.Module):
+class CNN2D(nn.Module):
     """
-    HEP-CNN RPV classifier model.
+    Generic CNN model with convolutions, max-pooling, fully connected layers,
+    and a linear output (logits) layer.
     """
-
-    def __init__(self, input_shape, conv_sizes, dense_sizes, dropout):
-        """HEP-CNN classifier constructor"""
-        super(HEPCNNClassifier, self).__init__()
+    def __init__(self, input_shape, conv_sizes, dense_sizes, output_size,
+                 dropout=0):
+        """Model constructor"""
+        super(CNNClassifier, self).__init__()
 
         # Add the convolutional layers
         conv_layers = []
@@ -36,11 +36,10 @@ class HEPCNNClassifier(nn.Module):
             dense_layers.append(nn.ReLU())
             dense_layers.append(nn.Dropout(dropout))
             in_size = dense_size
-        dense_layers.append(nn.Linear(in_size, 1))
-        dense_layers.append(nn.Sigmoid())
+        dense_layers.append(nn.Linear(in_size, output_size))
         self.dense_net = nn.Sequential(*dense_layers)
 
     def forward(self, x):
         h = self.conv_net(x)
         h = h.view(h.size(0), -1)
-        return self.dense_net(h).squeeze(-1)
+        return self.dense_net(h)
