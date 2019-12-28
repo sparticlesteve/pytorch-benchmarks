@@ -15,6 +15,9 @@ def get_model(name, **model_args):
     elif name == 'dcgan':
         from .dcgan import get_gan
         return get_gan(**model_args)
+    elif name == 'lstm':
+        from .lstm import LSTM
+        return LSTM(**model_args)
     elif name == 'alexnet':
         import torchvision
         return torchvision.models.alexnet(**model_args)
@@ -27,8 +30,5 @@ def get_model(name, **model_args):
     elif name == 'inceptionV3':
         import torchvision
         return torchvision.models.inception_v3(**model_args)
-    elif name == 'lstm':
-        from .rnn_classifier import LSTMClassifier
-        return LSTMClassifier(**model_args)
     else:
         raise Exception('Model %s unknown' % name)

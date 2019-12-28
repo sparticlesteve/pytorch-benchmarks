@@ -15,7 +15,7 @@ model_config:
     model_type: lstm
     input_size: 500
     hidden_size: 500
-    n_classes: 4
+    output_size: 4
     optimizer: 'Adam'
     learning_rate: 0.001
 
