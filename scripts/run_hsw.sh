@@ -7,6 +7,8 @@
 #SBATCH -J pytorch-bm-hsw
 #SBATCH -o logs/%x-%j.out
 
+set -e
+
 # Configuration
 export OMP_NUM_THREADS=32
 export KMP_AFFINITY="granularity=fine,compact,1,0"
@@ -21,3 +23,6 @@ srun -l python train.py -d configs/resnet50.yaml
 srun -l python train.py -d configs/inceptionV3.yaml
 srun -l python train.py -d configs/lstm.yaml
 srun -l python train.py -d configs/cnn3d.yaml
+
+echo "Collecting benchmark results..."
+python parse.py $BENCHMARK_RESULTS_PATH -o $BENCHMARK_RESULTS_PATH/results.txt
