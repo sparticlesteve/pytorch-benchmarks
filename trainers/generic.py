@@ -31,7 +31,6 @@ class GenericTrainer(BaseTrainer):
     def train_epoch(self, data_loader):
         """Train for one epoch"""
         self.model.train()
-        summary = dict()
         sum_loss = 0
         self.logger.debug(' Model sumw: %.4f',
                           sum(p.sum() for p in self.model.parameters()))
@@ -47,18 +46,17 @@ class GenericTrainer(BaseTrainer):
             loss = batch_loss.item()
             sum_loss += loss
             self.logger.debug(' batch %i loss %.3f', i, loss)
-        summary['train_loss'] = sum_loss / (i + 1)
-        self.logger.debug(' Processed %i batches' % (i + 1))
-        self.logger.info('  Training loss: %.4f' % summary['train_loss'])
+        train_loss = sum_loss / (i + 1)
+        self.logger.debug(' Processed %i batches', (i + 1))
+        self.logger.info('  Training loss: %.4f', train_loss)
         self.logger.debug(' Model sumw: %.4f',
                           sum(p.sum() for p in self.model.parameters()))
-        return summary
+        return dict(train_loss=train_loss)
 
     @torch.no_grad()
     def evaluate(self, data_loader):
         """"Evaluate the model"""
         self.model.eval()
-        summary = dict()
         sum_loss = 0
         sum_correct = 0
         # Loop over batches
@@ -73,13 +71,13 @@ class GenericTrainer(BaseTrainer):
             n_correct = (batch_preds == batch_target).sum().item()
             sum_correct += n_correct
             self.logger.debug(' batch %i loss %.3f correct %i', i, loss, n_correct)
-        summary['valid_loss'] = sum_loss / (i + 1)
-        summary['valid_acc'] = sum_correct / len(data_loader.sampler)
+        valid_loss = sum_loss / (i + 1)
+        valid_acc = sum_correct / len(data_loader.sampler)
         self.logger.debug(' Processed %i samples in %i batches',
                           len(data_loader.sampler), i + 1)
         self.logger.info('  Validation loss: %.4f acc: %.4f' %
-                         (summary['valid_loss'], summary['valid_acc']))
-        return summary
+                         (valid_loss, valid_acc))
+        return dict(valid_loss=valid_loss, valid_acc=valid_acc)
 
 def _test():
     t = GenericTrainer(output_dir='./')

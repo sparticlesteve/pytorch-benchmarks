@@ -8,7 +8,6 @@ import torch.nn as nn
 
 class CNN3D(nn.Module):
     """Simple 3D convolutional model"""
-    # TODO: make more configurable
     def __init__(self, input_shape, output_size,
                  conv_sizes=[16, 32, 64, 128], dense_sizes=[256]):
         super(CNN3D, self).__init__()
