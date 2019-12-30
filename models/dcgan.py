@@ -76,7 +76,7 @@ class Discriminator(nn.Module):
     def forward(self, inputs):
         return self.network(inputs).squeeze()
 
-def get_gan(n_channels=1, n_filters=16, noise_dim=64, threshold=0):
+def get_model(n_channels=1, n_filters=16, noise_dim=64, threshold=0):
     g = Generator(noise_dim=noise_dim, output_channels=n_channels,
                   n_filters=n_filters, threshold=threshold)
     d = Discriminator(input_channels=n_channels, n_filters=n_filters)

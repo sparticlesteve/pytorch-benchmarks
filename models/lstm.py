@@ -23,3 +23,6 @@ class LSTM(nn.Module):
         c0 = torch.zeros(*state_shape, dtype=torch.float, device=x.device)
         o, (h, c) = self.rnn(x, (h0, c0))
         return self.linear(h[-1])
+
+def get_model(**kwargs):
+    return LSTM(**kwargs)

@@ -38,3 +38,6 @@ class CNN3D(nn.Module):
         h = self.cnn(x)
         h = h.view(h.size(0), -1)
         return self.fnn(h)
+
+def get_model(**kwargs):
+    return CNN3D(**kwargs)

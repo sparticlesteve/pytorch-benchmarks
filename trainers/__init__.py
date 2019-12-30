@@ -5,12 +5,11 @@ Trainers here inherit from the BaseTrainer and implement the logic for
 constructing the model as well as training and evaluation.
 """
 
+import importlib
+
 def get_trainer(name, **trainer_args):
     """
     Factory function for retrieving a trainer.
     """
-    if name == 'generic':
-        from .generic import GenericTrainer
-        return GenericTrainer(**trainer_args)
-    else:
-        raise Exception('Trainer %s unknown' % name)
+    module = importlib.import_module('.' + name, 'trainers')
+    return module.get_trainer(**trainer_args)

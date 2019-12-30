@@ -79,6 +79,9 @@ class GenericTrainer(BaseTrainer):
                          (valid_loss, valid_acc))
         return dict(valid_loss=valid_loss, valid_acc=valid_acc)
 
+def get_trainer(**kwargs):
+    return GenericTrainer(**kwargs)
+
 def _test():
     t = GenericTrainer(output_dir='./')
     t.build_model()

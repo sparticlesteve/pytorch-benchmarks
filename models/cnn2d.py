@@ -43,3 +43,6 @@ class CNN2D(nn.Module):
         h = self.conv_net(x)
         h = h.view(h.size(0), -1)
         return self.dense_net(h)
+
+def get_model(**kwargs):
+    return CNN2D(**kwargs)

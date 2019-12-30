@@ -130,3 +130,6 @@ class GANTrainer(BaseTrainer):
         self.logger.info('  Avg discriminator loss: %.4f', summary['d_train_loss'])
         self.logger.info('  Avg generator loss: %.4f', summary['g_train_loss'])
         return summary
+
+def get_trainer(**kwargs):
+    return get_trainer(**kwargs)
