@@ -12,7 +12,7 @@ from models import get_model
 # Externals
 import numpy as np
 import torch
-from torch.nn.parallel import DistributedDataParallel
+from torch.nn.parallel import DistributedDataParallelCPU
 
 class GANTrainer(BaseTrainer):
     """
@@ -51,8 +51,8 @@ class GANTrainer(BaseTrainer):
         g, d = get_model(name=name, noise_dim=noise_dim, **model_args)
         self.generator, self.discriminator = g.to(self.device), d.to(self.device)
         if self.distributed:
-            self.generator = DistributedDataParallel(self.generator)
-            self.discriminator = DistributedDataParallel(self.discriminator)
+            self.generator = DistributedDataParallelCPU(self.generator)
+            self.discriminator = DistributedDataParallelCPU(self.discriminator)
         self.noise_dim = noise_dim
         self.label_flip_rate = label_flip_rate
         self.loss_func = torch.nn.BCELoss()
