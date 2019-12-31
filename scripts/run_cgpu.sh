@@ -7,13 +7,25 @@
 #SBATCH -J pytorch-bm-cgpu
 #SBATCH -o logs/%x-%j.out
 
+set -e
+
+# Options
+clean=false
+models="alexnet vgg11 resnet50 inceptionV3 lstm cnn3d"
+if [ $# -ge 1 ]; then models=$@; fi
+
 # Configuration
-export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/cori-gpu/v1.2.0-gpu
+# TODO: change following to use number of ranks
+export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/gpu-v1.2.0-n1
+if $clean; then
+    [ -d $BENCHMARK_RESULTS_PATH ] && rm -rf $BENCHMARK_RESULTS_PATH
+fi
 module load pytorch/v1.2.0-gpu
 
-srun python train.py --device cuda configs/alexnet.yaml
-srun python train.py --device cuda configs/vgg11.yaml
-srun python train.py --device cuda configs/resnet50.yaml
-srun python train.py --device cuda configs/inceptionV3.yaml
-srun python train.py --device cuda configs/lstm.yaml
-srun python train.py --device cuda configs/cnn3d.yaml
+# Run each model
+for m in $models; do
+    srun python train.py --rank-gpu configs/${m}.yaml
+done
+
+echo "Collecting benchmark results..."
+python parse.py $BENCHMARK_RESULTS_PATH -o $BENCHMARK_RESULTS_PATH/results.txt
