@@ -5,6 +5,7 @@ This module defines a generic trainer for simple models and datasets.
 # Externals
 import torch
 from torch import nn
+from torch.nn.parallel import DistributedDataParallel
 
 # Locals
 from .base import BaseTrainer
@@ -20,9 +21,15 @@ class GenericTrainer(BaseTrainer):
                     optimizer='Adam', learning_rate=0.001,
                     **model_args):
         """Instantiate our model"""
+
+        # Construct the model
         self.model = get_model(name=model_type, **model_args).to(self.device)
+
+        # Distributed data parallelism
         if self.distributed:
-            self.model = nn.parallel.DistributedDataParallel(self.model)
+            device_ids = [self.gpu] if self.gpu is not None else None
+            self.model = DistributedDataParallel(self.model, device_ids=device_ids)
+
         # TODO: add support for more optimizers and loss functions here
         opt_type = dict(Adam=torch.optim.Adam)[optimizer]
         self.optimizer = opt_type(self.model.parameters(), lr=learning_rate)

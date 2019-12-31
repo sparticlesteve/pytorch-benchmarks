@@ -51,8 +51,9 @@ class GANTrainer(BaseTrainer):
         g, d = get_model(name=name, noise_dim=noise_dim, **model_args)
         self.generator, self.discriminator = g.to(self.device), d.to(self.device)
         if self.distributed:
-            self.generator = DistributedDataParallel(self.generator)
-            self.discriminator = DistributedDataParallel(self.discriminator)
+            dev_ids = [self.gpu] if self.gpu is not None else None
+            self.generator = DistributedDataParallel(self.generator, device_ids=dev_ids)
+            self.discriminator = DistributedDataParallel(self.discriminator, device_ids=dev_ids)
         self.noise_dim = noise_dim
         self.label_flip_rate = label_flip_rate
         self.loss_func = torch.nn.BCELoss()

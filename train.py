@@ -24,7 +24,9 @@ def parse_args():
     add_arg('config', nargs='?', default='configs/hello.yaml')
     add_arg('-d', '--distributed', action='store_true')
     add_arg('-v', '--verbose', action='store_true')
-    add_arg('--device', default='cpu')
+    add_arg('--gpu', type=int)
+    add_arg('--rank-gpu', action='store_true')
+    add_arg('--ranks-per-node', type=int, default=8)
     add_arg('--interactive', action='store_true')
     return parser.parse_args()
 
@@ -73,8 +75,11 @@ def main():
         distributed=args.distributed, **data_config)
 
     # Load the trainer
+    gpu = (rank % args.ranks_per_node) if args.rank_gpu else args.gpu
+    if gpu is not None:
+        logging.info('Using GPU %i', gpu)
     trainer = get_trainer(name=config['trainer'], distributed=args.distributed,
-                          rank=rank, output_dir=output_dir, device=args.device)
+                          rank=rank, output_dir=output_dir, gpu=gpu)
     # Build the model
     trainer.build_model(**model_config)
     if rank == 0:
