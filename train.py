@@ -16,27 +16,20 @@ import torch.distributed as dist
 from datasets import get_data_loaders
 from trainers import get_trainer
 from utils.logging import config_logging
+from utils.distributed import init_workers
 
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser('train.py')
     add_arg = parser.add_argument
     add_arg('config', nargs='?', default='configs/hello.yaml')
-    add_arg('-d', '--distributed', action='store_true')
+    add_arg('-d', '--distributed-backend', choices=['mpi', 'nccl', 'gloo'])
     add_arg('-v', '--verbose', action='store_true')
     add_arg('--gpu', type=int)
     add_arg('--rank-gpu', action='store_true')
     add_arg('--ranks-per-node', type=int, default=8)
     add_arg('--interactive', action='store_true')
     return parser.parse_args()
-
-def init_workers(distributed=False):
-    rank, n_ranks = 0, 1
-    if distributed:
-        dist.init_process_group(backend='mpi')
-        rank = dist.get_rank()
-        n_ranks = dist.get_world_size()
-    return rank, n_ranks
 
 def load_config(config_file):
     with open(config_file) as f:
@@ -48,7 +41,7 @@ def main():
 
     # Initialization
     args = parse_args()
-    rank, n_ranks = init_workers(args.distributed)
+    rank, n_ranks = init_workers(args.distributed_backend)
 
     # Load configuration
     config = load_config(args.config)
@@ -71,14 +64,15 @@ def main():
         logging.info('Configuration: %s' % config)
 
     # Load the datasets
+    is_distributed = args.distributed_backend is not None
     train_data_loader, valid_data_loader = get_data_loaders(
-        distributed=args.distributed, **data_config)
+        distributed=is_distributed, **data_config)
 
     # Load the trainer
     gpu = (rank % args.ranks_per_node) if args.rank_gpu else args.gpu
     if gpu is not None:
         logging.info('Using GPU %i', gpu)
-    trainer = get_trainer(name=config['trainer'], distributed=args.distributed,
+    trainer = get_trainer(name=config['trainer'], distributed=is_distributed,
                           rank=rank, output_dir=output_dir, gpu=gpu)
     # Build the model
     trainer.build_model(**model_config)
