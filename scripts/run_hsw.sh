@@ -26,7 +26,7 @@ module load pytorch/v1.2.0
 
 # Run each model
 for m in $models; do
-    srun -l python train.py -d configs/${m}.yaml
+    srun -l python train.py -d mpi configs/${m}.yaml
 done
 
 echo "Collecting benchmark results..."
