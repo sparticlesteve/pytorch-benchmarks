@@ -10,6 +10,7 @@ from torch.nn.parallel import DistributedDataParallel
 # Locals
 from .base import BaseTrainer
 from models import get_model
+from utils.ddp import DistributedDataParallelCPU
 
 class GenericTrainer(BaseTrainer):
     """Trainer code for basic classification problems."""
@@ -27,8 +28,12 @@ class GenericTrainer(BaseTrainer):
 
         # Distributed data parallelism
         if self.distributed:
-            device_ids = [self.gpu] if self.gpu is not None else None
-            self.model = DistributedDataParallel(self.model, device_ids=device_ids)
+
+            # Testing local DDP-CPU
+            self.model = DistributedDataParallelCPU(self.model)
+
+            #device_ids = [self.gpu] if self.gpu is not None else None
+            #self.model = DistributedDataParallel(self.model, device_ids=device_ids)
 
         # TODO: add support for more optimizers and loss functions here
         opt_type = dict(Adam=torch.optim.Adam)[optimizer]
