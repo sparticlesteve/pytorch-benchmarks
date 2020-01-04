@@ -12,28 +12,24 @@
 set -e
 
 # Options
+version=v1.3.1
 clean=false
+backend=gloo
 models="alexnet vgg11 resnet50 inceptionV3 lstm cnn3d"
 if [ $# -ge 1 ]; then models=$@; fi
 
 # Configuration
-export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/gpu-v1.2.0-n$SLURM_NTASKS
+export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/gpu-$version-n$SLURM_NTASKS
 if $clean; then
     [ -d $BENCHMARK_RESULTS_PATH ] && rm -rf $BENCHMARK_RESULTS_PATH
 fi
 
 # Load software
-module load gcc/7.3.0
-module load cuda/10.1.168
-module load openmpi/4.0.1-ucx-1.6
-module load pytorch/v1.2.0-gpu
-# Library fix
-export LD_LIBRARY_PATH=$(dirname $(which python))/../lib/python3.6/site-packages/torch/lib:$LD_LIBRARY_PATH
-export UCX_LOG_LEVEL=error
+module load pytorch/$version-gpu
 
 # Run each model
 for m in $models; do
-    srun -l python train.py -d gloo --rank-gpu configs/${m}.yaml
+    srun -l python train.py -d $backend --rank-gpu configs/${m}.yaml
 done
 
 echo "Collecting benchmark results..."
