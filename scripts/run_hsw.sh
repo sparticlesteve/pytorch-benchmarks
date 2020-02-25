@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -C haswell
-#SBATCH -q debug
+#SBATCH -q regular
 #SBATCH -t 30
 #SBATCH -d singleton
 #SBATCH -J pytorch-bm-hsw
@@ -11,7 +11,7 @@ set -e
 
 # Options
 version=v1.3.1
-clean=false
+clean=true
 backend=mpi
 models="alexnet vgg11 resnet50 inceptionV3 lstm cnn3d"
 if [ $# -ge 1 ]; then models=$@; fi
