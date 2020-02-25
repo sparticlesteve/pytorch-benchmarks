@@ -39,8 +39,8 @@ def load_results(results_dirs):
         print(results_dir)
 
         # Extract hardware, software, from path
-        m = re.match('(.*)-(.*)-n(\d+)', os.path.basename(results_dir))
-        hw, sw, ranks = m.group(1), m.group(2), int(m.group(3))
+        m = re.match('(.*)-(.*)-(.*)-n(\d+)', os.path.basename(results_dir))
+        hw, sw, backend, ranks = m.group(1), m.group(2), m.group(3), int(m.group(4))
 
         # Use all subdirectories as models
         models = [m for m in os.listdir(results_dir)
@@ -48,7 +48,7 @@ def load_results(results_dirs):
         for model in models:
             model_subdir = os.path.join(results_dir, model)
             results.append(load_result(model_subdir, hardware=hw, version=sw,
-                                       model=model, ranks=ranks))
+                                       backend=backend, model=model, ranks=ranks))
 
     return pd.DataFrame(results)
 
