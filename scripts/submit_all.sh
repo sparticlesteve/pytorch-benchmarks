@@ -3,13 +3,13 @@
 # Launch all benchmark runs for this version
 
 # Scaling on Haswell
-sbatch -N 1 -q debug scripts/run_hsw.sh
-sbatch -N 2 -q regular scripts/run_hsw.sh
-sbatch -N 4 -q regular scripts/run_hsw.sh
-sbatch -N 8 -q debug scripts/run_hsw.sh
-sbatch -N 16 -q debug scripts/run_hsw.sh
-sbatch -N 32 -q debug scripts/run_hsw.sh
-sbatch -N 64 -q debug scripts/run_hsw.sh
+sbatch -N 1 scripts/run_hsw.sh
+sbatch -N 2 scripts/run_hsw.sh
+sbatch -N 4 scripts/run_hsw.sh
+sbatch -N 8 scripts/run_hsw.sh
+sbatch -N 16 scripts/run_hsw.sh
+sbatch -N 32 scripts/run_hsw.sh
+sbatch -N 64 scripts/run_hsw.sh
 
 # Scaling on KNL
 sbatch -N 1 scripts/run_knl.sh
