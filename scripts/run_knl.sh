@@ -20,7 +20,7 @@ if [ $# -ge 1 ]; then models=$@; fi
 export OMP_NUM_THREADS=68
 export KMP_AFFINITY="granularity=fine,compact,1,0"
 export KMP_BLOCKTIME=1
-export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/knl-$version-$backend-n${SLURM_JOB_NUM_NODES}
+export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/results/knl-$version-$backend-n${SLURM_JOB_NUM_NODES}
 if $clean; then
     [ -d $BENCHMARK_RESULTS_PATH ] && rm -rf $BENCHMARK_RESULTS_PATH
 fi

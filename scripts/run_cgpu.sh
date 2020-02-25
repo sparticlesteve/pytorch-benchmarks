@@ -19,7 +19,7 @@ models="alexnet vgg11 resnet50 inceptionV3 lstm cnn3d"
 if [ $# -ge 1 ]; then models=$@; fi
 
 # Configuration
-export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/gpu-$version-$backend-n$SLURM_NTASKS
+export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/results/gpu-$version-$backend-n$SLURM_NTASKS
 if $clean; then
     [ -d $BENCHMARK_RESULTS_PATH ] && rm -rf $BENCHMARK_RESULTS_PATH
 fi
