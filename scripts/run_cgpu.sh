@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH -N 1
 #SBATCH -C gpu
 #SBATCH --gres=gpu:8
 #SBATCH --exclusive
-#SBATCH --ntasks-per-node 8
+#SBATCH --ntasks-per-node=8
+#SBATCH -d singleton
 #SBATCH -c 10
 #SBATCH -t 30
 #SBATCH -J pytorch-bm-cgpu
@@ -13,8 +13,8 @@ set -e
 
 # Options
 version=v1.3.1
-clean=false
-backend=gloo
+clean=true
+backend=nccl
 models="alexnet vgg11 resnet50 inceptionV3 lstm cnn3d"
 if [ $# -ge 1 ]; then models=$@; fi
 
