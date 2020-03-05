@@ -7,12 +7,13 @@
 #SBATCH -c 10
 #SBATCH -t 30
 #SBATCH -J pytorch-bm-cgpu
+#SBATCH --image registry.services.nersc.gov/wbhimji/nvidia-pytorch:19.12-py3
 #SBATCH -o logs/%x-%j.out
 
 set -e
 
 # Options
-version=v1.4.0
+version=v1.4.0.ngc
 clean=true
 backend=nccl
 models="alexnet resnet50 lstm cnn3d"
@@ -24,13 +25,11 @@ if $clean; then
     [ -d $BENCHMARK_RESULTS_PATH ] && rm -rf $BENCHMARK_RESULTS_PATH
 fi
 
-# Load software
-module load pytorch/$version-gpu
-
 # Run each model
 for m in $models; do
-    srun -l python train.py -d $backend --rank-gpu configs/${m}.yaml
+    srun -l shifter --volume="/dev/infiniband:/sys/class/infiniband_verbs" \
+        python train.py -d $backend --rank-gpu configs/${m}.yaml
 done
 
 echo "Collecting benchmark results..."
-python parse.py $BENCHMARK_RESULTS_PATH -o $BENCHMARK_RESULTS_PATH/results.txt
+srun shifter python parse.py $BENCHMARK_RESULTS_PATH -o $BENCHMARK_RESULTS_PATH/results.txt
