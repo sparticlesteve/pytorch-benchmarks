@@ -13,7 +13,7 @@ set -e
 version=v1.4.0
 clean=true
 backend=mpi
-models="alexnet vgg11 resnet50 inceptionV3 lstm cnn3d"
+models="alexnet resnet50 lstm cnn3d"
 if [ $# -ge 1 ]; then models=$@; fi
 
 # Configuration
