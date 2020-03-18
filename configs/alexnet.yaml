@@ -3,11 +3,11 @@ output_dir: $BENCHMARK_RESULTS_PATH/alexnet
 
 data_config:
     name: dummy
-    n_train: 2048
-    n_valid: 2048
+    n_train: 4096
+    n_valid: 4096
     input_shape: [3, 224, 224]
     n_classes: 1000
-    batch_size: 128
+    batch_size: 256
     use_dist_sampler_train: false
     use_dist_sampler_valid: false
 

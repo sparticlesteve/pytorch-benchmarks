@@ -3,11 +3,11 @@ output_dir: $BENCHMARK_RESULTS_PATH/lstm
 
 data_config:
     name: dummy
-    n_train: 2048
-    n_valid: 2048
+    n_train: 4096
+    n_valid: 4096
     input_shape: [50, 500] # (seq_size, input_size)
     n_classes: 4
-    batch_size: 64
+    batch_size: 256
     use_dist_sampler_train: false
     use_dist_sampler_valid: false
 

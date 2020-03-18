@@ -3,11 +3,11 @@ output_dir: $BENCHMARK_RESULTS_PATH/cnn3d
 
 data_config:
     name: dummy
-    n_train: 2048
-    n_valid: 2048
+    n_train: 4096
+    n_valid: 4096
     input_shape: [1, 32, 32, 32]
     n_classes: 4
-    batch_size: 64
+    batch_size: 256
     use_dist_sampler_train: false
     use_dist_sampler_valid: false
 
