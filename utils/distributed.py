@@ -3,6 +3,7 @@ Utilities for distributed training.
 """
 
 import os
+import torch
 import torch.distributed as dist
 
 def _get_sync_file():
@@ -49,6 +50,8 @@ def init_workers(backend=None):
     - GLOO backend with rank determined by SLURM variables and intialized via
       shared file under $SCRATCH.
     """
+    # set manual seed such that each rank will intialize to the same model weights
+    torch.manual_seed(0)
     if backend is None:
         rank, n_ranks = 0, 1
     elif backend == 'mpi':
