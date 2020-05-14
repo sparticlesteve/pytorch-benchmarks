@@ -28,5 +28,5 @@ sbatch -n 2 scripts/run_cgpu.sh
 sbatch -n 4 scripts/run_cgpu.sh
 sbatch -n 8 scripts/run_cgpu.sh
 sbatch -n 16 scripts/run_cgpu.sh
-sbatch -n 32 -t 5:00:00 scripts/run_cgpu.sh
-sbatch -n 64 -t 5:00:00 scripts/run_cgpu.sh
+sbatch -n 32 scripts/run_cgpu.sh
+sbatch -n 64 scripts/run_cgpu.sh
