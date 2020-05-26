@@ -20,13 +20,43 @@ sbatch -N 16 scripts/run_knl.sh
 sbatch -N 32 scripts/run_knl.sh
 sbatch -N 64 scripts/run_knl.sh
 
-# Scaling on Cori-GPU
+# Scaling on Haswell with Gloo
+sbatch -N 1 scripts/run_hsw.sh --backend gloo
+sbatch -N 2 scripts/run_hsw.sh --backend gloo
+sbatch -N 4 scripts/run_hsw.sh --backend gloo
+sbatch -N 8 scripts/run_hsw.sh --backend gloo
+sbatch -N 16 scripts/run_hsw.sh --backend gloo
+sbatch -N 32 scripts/run_hsw.sh --backend gloo
+sbatch -N 64 scripts/run_hsw.sh --backend gloo
+
+# Software version comparisons - cpu
+sbatch scripts/run_hsw.sh --version v1.3.1
+sbatch scripts/run_hsw.sh --version v1.2.0
+sbatch scripts/run_hsw.sh --version v1.4.0
+
+# Scaling on Cori-GPU with NCCL
 module purge
 module load esslurm
-sbatch -n 1 scripts/run_cgpu.sh
-sbatch -n 2 scripts/run_cgpu.sh
-sbatch -n 4 scripts/run_cgpu.sh
-sbatch -n 8 scripts/run_cgpu.sh
-sbatch -n 16 scripts/run_cgpu.sh
-sbatch -n 32 scripts/run_cgpu.sh
-sbatch -n 64 scripts/run_cgpu.sh
+sbatch -n 1 scripts/run_cgpu.sh --backend nccl
+sbatch -n 2 scripts/run_cgpu.sh --backend nccl
+sbatch -n 4 scripts/run_cgpu.sh --backend nccl
+sbatch -n 8 scripts/run_cgpu.sh --backend nccl
+sbatch -n 16 scripts/run_cgpu.sh --backend nccl
+sbatch -n 32 scripts/run_cgpu.sh --backend nccl
+sbatch -n 64 scripts/run_cgpu.sh --backend nccl
+
+# Scaling on Cori-GPU with Gloo
+sbatch -n 1 scripts/run_cgpu.sh --backend gloo
+sbatch -n 2 scripts/run_cgpu.sh --backend gloo
+sbatch -n 4 scripts/run_cgpu.sh --backend gloo
+sbatch -n 8 scripts/run_cgpu.sh --backend gloo
+sbatch -n 16 scripts/run_cgpu.sh --backend gloo
+sbatch -n 32 scripts/run_cgpu.sh --backend gloo
+sbatch -n 64 scripts/run_cgpu.sh --backend gloo
+
+# Software version comparisons - gpu
+sbatch -n 1 scripts/run_cgpu.sh --version v1.1.0
+sbatch -n 1 scripts/run_cgpu.sh --version v1.2.0
+sbatch -n 1 scripts/run_cgpu.sh --version v1.3.1
+sbatch -n 1 scripts/run_cgpu.sh --version v1.4.0
+sbatch -n 1 scripts/run_cgpu_shifter.sh
