@@ -3,8 +3,8 @@ output_dir: $BENCHMARK_RESULTS_PATH/cnn3d
 
 data_config:
     name: dummy
-    n_train: 4096
-    n_valid: 4096
+    n_train: 8192
+    n_valid: 8192
     input_shape: [1, 32, 32, 32]
     n_classes: 4
     batch_size: 128
@@ -19,4 +19,4 @@ model_config:
     learning_rate: 0.001
 
 train_config:
-    n_epochs: 1
+    n_epochs: 4

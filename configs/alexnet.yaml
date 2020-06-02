@@ -3,8 +3,8 @@ output_dir: $BENCHMARK_RESULTS_PATH/alexnet
 
 data_config:
     name: dummy
-    n_train: 4096
-    n_valid: 4096
+    n_train: 8192
+    n_valid: 8192
     input_shape: [3, 224, 224]
     n_classes: 1000
     batch_size: 128
@@ -18,4 +18,4 @@ model_config:
     learning_rate: 0.001
 
 train_config:
-    n_epochs: 1
+    n_epochs: 4

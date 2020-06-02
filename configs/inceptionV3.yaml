@@ -19,4 +19,4 @@ model_config:
     learning_rate: 0.001
 
 train_config:
-    n_epochs: 1
+    n_epochs: 4
