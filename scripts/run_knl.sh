@@ -46,7 +46,6 @@ done
 export OMP_NUM_THREADS=68
 export KMP_AFFINITY="granularity=fine,compact,1,0"
 export KMP_BLOCKTIME=1
-# TODO: improve this to avoid using env var in the config file
 export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/results/knl-$version-$backend-n${SLURM_JOB_NUM_NODES}
 if $clean; then
     [ -d $BENCHMARK_RESULTS_PATH ] && rm -rf $BENCHMARK_RESULTS_PATH
@@ -64,8 +63,9 @@ module load pytorch/$version
 module list
 
 # Run each model
-for m in $models; do
-    srun -l python train.py -d $backend configs/${m}.yaml
+for model in $models; do
+    srun -l python train.py configs/${model}.yaml -d $backend \
+        --output-dir $BENCHMARK_RESULTS_PATH/$model
 done
 
 echo "Collecting benchmark results..."

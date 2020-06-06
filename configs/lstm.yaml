@@ -1,5 +1,5 @@
 trainer: generic
-output_dir: $BENCHMARK_RESULTS_PATH/lstm
+output_dir: results/lstm
 
 data_config:
     name: dummy

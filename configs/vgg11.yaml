@@ -1,5 +1,5 @@
 trainer: generic
-output_dir: $BENCHMARK_RESULTS_PATH/vgg11
+output_dir: results/vgg11
 
 data_config:
     name: dummy

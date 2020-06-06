@@ -42,7 +42,6 @@ done
 
 # Configuration
 version=$(echo $SLURM_SPANK_SHIFTER_IMAGEREQUEST | tr ':' ' ' | awk '{print $2}')
-# TODO: improve this to avoid using env var in the config file
 export BENCHMARK_RESULTS_PATH=$SCRATCH/pytorch-benchmarks/results/gpu-$version-$backend-n$SLURM_NTASKS
 if $clean; then
     [ -d $BENCHMARK_RESULTS_PATH ] && rm -rf $BENCHMARK_RESULTS_PATH
@@ -57,9 +56,10 @@ echo "clean $clean"
 echo "writing outputs to $BENCHMARK_RESULTS_PATH"
 
 # Run each model
-for m in $models; do
+for model in $models; do
     srun -l shifter --volume="/dev/infiniband:/sys/class/infiniband_verbs" \
-        python train.py -d $backend --rank-gpu configs/${m}.yaml
+        python train.py configs/${model}.yaml -d $backend --rank-gpu \
+        --output-dir $BENCHMARK_RESULTS_PATH/$model
 done
 
 echo "Collecting benchmark results..."
