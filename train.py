@@ -23,6 +23,8 @@ def parse_args():
     parser = argparse.ArgumentParser('train.py')
     add_arg = parser.add_argument
     add_arg('config', nargs='?', default='configs/hello.yaml')
+    add_arg('-o', '--output-dir',
+            help='Override output directory')
     add_arg('-d', '--distributed-backend', choices=['mpi', 'nccl', 'gloo'],
             help='Specify which distributed backend to use')
     add_arg('--gpu', type=int,
@@ -51,14 +53,12 @@ def main():
     config = load_config(args.config)
 
     # Prepare output directory
-    output_dir = config.get('output_dir', None)
-    if output_dir is not None:
-        output_dir = os.path.expandvars(output_dir)
-        os.makedirs(output_dir, exist_ok=True)
+    output_dir = os.path.expandvars(args.output_dir if args.output_dir is not None
+                                    else config['output_dir'])
+    os.makedirs(output_dir, exist_ok=True)
 
     # Setup logging
-    log_file = (os.path.join(output_dir, 'out_%i.log' % rank)
-                if output_dir is not None else None)
+    log_file = os.path.join(output_dir, 'out_%i.log' % rank)
     config_logging(verbose=args.verbose, log_file=log_file)
     logging.info('Initialized rank %i out of %i', rank, n_ranks)
     if rank == 0:
