@@ -84,8 +84,7 @@ def main():
     summary = trainer.train(train_data_loader=train_data_loader,
                             valid_data_loader=valid_data_loader,
                             **config['train_config'])
-    if output_dir is not None:
-        trainer.write_summaries()
+    trainer.write_summaries()
 
     # Print some conclusions
     logging.info('Finished training')
