@@ -7,7 +7,7 @@
 #SBATCH -c 10
 #SBATCH -t 30
 #SBATCH -J pytorch-bm-cgpu
-#SBATCH --image nersc/pytorch:ngc_20.03_v0
+#SBATCH --image nersc/pytorch:ngc-20.07-v0
 #SBATCH -o logs/%x-%j.out
 
 set -e
