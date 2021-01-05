@@ -1,0 +1,27 @@
+trainer: generic
+output_dir: results/transformer
+
+data_config:
+    name: dummy
+    n_train: 8192
+    n_valid: 8192
+    input_shape: [512]
+    target_shape: [512]
+    input_type: 'label'
+    n_classes: 1024
+    batch_size: 32
+    use_dist_sampler_train: false
+    use_dist_sampler_valid: false
+
+model_config:
+    model_type: transformer
+    ntoken: 1024
+    ninp: 512
+    nhid: 512
+    nhead: 8
+    nlayers: 4
+    optimizer: 'Adam'
+    learning_rate: 0.01
+
+train_config:
+    n_epochs: 4
