@@ -10,7 +10,7 @@
 set -e
 
 # Options
-version=v1.5.0
+version=1.7.1
 backend=mpi
 models="alexnet resnet50 lstm cnn3d"
 clean=true

@@ -33,10 +33,13 @@ sbatch -N 64 scripts/run_hsw.sh --backend gloo
 sbatch scripts/run_hsw.sh --version v1.3.1
 sbatch scripts/run_hsw.sh --version v1.2.0
 sbatch scripts/run_hsw.sh --version v1.4.0
+sbatch scripts/run_hsw.sh --version v1.5.0
+sbatch scripts/run_hsw.sh --version v1.6.0
+#sbatch scripts/run_hsw.sh --version 1.7.1
 
 # Scaling on Cori-GPU with NCCL
 module purge
-module load esslurm
+module load cgpu
 sbatch -n 1 scripts/run_cgpu.sh --backend nccl
 sbatch -n 2 scripts/run_cgpu.sh --backend nccl
 sbatch -n 4 scripts/run_cgpu.sh --backend nccl
@@ -55,8 +58,10 @@ sbatch -n 32 scripts/run_cgpu.sh --backend gloo
 sbatch -n 64 scripts/run_cgpu.sh --backend gloo
 
 # Software version comparisons - gpu
-sbatch -n 1 scripts/run_cgpu.sh --version v1.1.0
 sbatch -n 1 scripts/run_cgpu.sh --version v1.2.0
 sbatch -n 1 scripts/run_cgpu.sh --version v1.3.1
 sbatch -n 1 scripts/run_cgpu.sh --version v1.4.0
+sbatch -n 1 scripts/run_cgpu.sh --version v1.5.1
+sbatch -n 1 scripts/run_cgpu.sh --version v1.6.0
+sbatch -n 1 scripts/run_cgpu.sh --version 1.7.0
 sbatch -n 1 scripts/run_cgpu_shifter.sh
