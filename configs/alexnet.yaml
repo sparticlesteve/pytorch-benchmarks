@@ -3,8 +3,8 @@ output_dir: results/alexnet
 
 data_config:
     name: dummy
-    n_train: 8192
-    n_valid: 8192
+    n_train: 16384
+    n_valid: 16384
     input_shape: [3, 224, 224]
     n_classes: 1000
     batch_size: 128
