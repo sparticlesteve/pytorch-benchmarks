@@ -12,8 +12,8 @@ set -e
 # Options
 version=1.7.1
 backend=mpi
-models="alexnet resnet50 lstm cnn3d"
-clean=true
+models="alexnet resnet50 lstm cnn3d transformer"
+clean=false
 usage="$0 --version VERSION --backend BACKEND --models \"MODELS ...\" --clean CLEAN"
 
 # Parse command line options

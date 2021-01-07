@@ -14,8 +14,8 @@ set -e
 
 # Options
 backend=nccl
-models="alexnet resnet50 lstm cnn3d"
-clean=true
+models="alexnet resnet50 lstm cnn3d transformer"
+clean=false
 usage="$0 --backend BACKEND --models \"MODELS ...\" --clean CLEAN"
 
 # Parse command line options
