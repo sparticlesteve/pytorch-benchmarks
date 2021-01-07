@@ -5,7 +5,7 @@ data_config:
     name: dummy
     n_train: 8192
     n_valid: 8192
-    input_shape: [1, 32, 32, 32]
+    input_shape: [1, 64, 64, 64]
     n_classes: 4
     batch_size: 128
     use_dist_sampler_train: false
@@ -13,7 +13,7 @@ data_config:
 
 model_config:
     model_type: cnn3d
-    input_shape: [1, 32, 32, 32]
+    input_shape: [1, 64, 64, 64]
     output_size: 4
     optimizer: 'Adam'
     learning_rate: 0.001
