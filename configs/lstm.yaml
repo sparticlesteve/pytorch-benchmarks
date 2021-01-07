@@ -3,9 +3,9 @@ output_dir: results/lstm
 
 data_config:
     name: dummy
-    n_train: 8192
-    n_valid: 8192
-    input_shape: [50, 500] # (seq_size, input_size)
+    n_train: 32768
+    n_valid: 32768
+    input_shape: [64, 512] # (seq_len, input_size)
     n_classes: 4
     batch_size: 128
     use_dist_sampler_train: false
@@ -13,9 +13,10 @@ data_config:
 
 model_config:
     model_type: lstm
-    input_size: 500
-    hidden_size: 500
-    output_size: 4
+    input_size: 512
+    hidden_size: 512
+    output_size: 8
+    n_lstm_layers: 4
     optimizer: 'Adam'
     learning_rate: 0.001
 
