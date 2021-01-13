@@ -2,7 +2,7 @@
 #SBATCH -N 1
 #SBATCH -C knl
 #SBATCH -q regular
-#SBATCH -t 1:00:00
+#SBATCH -t 4:00:00
 #SBATCH -d singleton
 #SBATCH -J pytorch-bm-knl
 #SBATCH -o logs/%x-%j.out

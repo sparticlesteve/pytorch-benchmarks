@@ -2,7 +2,7 @@
 #SBATCH -N 1
 #SBATCH -C haswell
 #SBATCH -q regular
-#SBATCH -t 30
+#SBATCH -t 3:00:00
 #SBATCH -d singleton
 #SBATCH -J pytorch-bm-hsw
 #SBATCH -o logs/%x-%j.out
