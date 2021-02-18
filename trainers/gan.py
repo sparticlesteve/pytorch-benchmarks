@@ -72,14 +72,16 @@ class GANTrainer(BaseTrainer):
         # Loop over training batches
         for i, data in enumerate(data_loader):
 
+            if type(data) == list:
+                data = data[0]
             self.logger.debug(' Batch %i', i)
             real_data = data.to(self.device)
             batch_size = real_data.size(0)
 
             # Label flipping
             flip = (np.random.random_sample() < self.label_flip_rate)
-            real_label = 0 if flip else 1
-            fake_label = 1 if flip else 0
+            real_label = 0. if flip else 1.
+            fake_label = 1. if flip else 0.
 
             # Train discriminator with real samples
             labels = torch.full((batch_size,), real_label, device=self.device)
@@ -133,4 +135,4 @@ class GANTrainer(BaseTrainer):
         return summary
 
 def get_trainer(**kwargs):
-    return get_trainer(**kwargs)
+    return GANTrainer(**kwargs)
