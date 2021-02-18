@@ -3,11 +3,11 @@ output_dir: results/dcgan
 
 data_config:
     name: dummy
-    n_train: 8192
-    n_valid: 8192
+    n_train: 16384
+    n_valid: 16384
     input_shape: [3, 64, 64]
     target_shape: null
-    batch_size: 64
+    batch_size: 128
     use_dist_sampler_train: false
     use_dist_sampler_valid: false
 
