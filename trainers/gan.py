@@ -119,7 +119,6 @@ class GANTrainer(BaseTrainer):
             d_sum_out_real += d_out_real.mean().item()
             d_sum_out_fake += d_out_fake.mean().item()
 
-        # TODO: save subset of generated data
         n_batches = i + 1
         summary['d_train_loss'] = d_sum_loss / n_batches
         summary['g_train_loss'] = g_sum_loss / n_batches
@@ -133,6 +132,70 @@ class GANTrainer(BaseTrainer):
         self.logger.info('  Avg discriminator loss: %.4f', summary['d_train_loss'])
         self.logger.info('  Avg generator loss: %.4f', summary['g_train_loss'])
         return summary
+
+    @torch.no_grad()
+    def evaluate(self, data_loader):
+        """Evaluate the model"""
+        self.generator.eval()
+        self.discriminator.eval()
+        summary = dict()
+        d_sum_loss, g_sum_loss = 0, 0
+        d_sum_out_real, d_sum_out_fake = 0, 0
+
+        # Loop over training batches
+        for i, data in enumerate(data_loader):
+
+            if type(data) == list:
+                data = data[0]
+            self.logger.debug(' Batch %i', i)
+            real_data = data.to(self.device)
+            batch_size = real_data.size(0)
+
+            # Label flipping
+            flip = (np.random.random_sample() < self.label_flip_rate)
+            real_label = 0. if flip else 1.
+            fake_label = 1. if flip else 0.
+
+            # Train discriminator with real samples
+            labels = torch.full((batch_size,), real_label, device=self.device)
+            d_out_real = self.discriminator(real_data)
+            d_loss_real = self.loss_func(d_out_real, labels)
+
+            # Train discriminator with fake generated samples
+            noise = torch.randn(batch_size, self.noise_dim, 1, 1, device=self.device)
+            fake_data = self.generator(noise)
+            labels.fill_(fake_label)
+            d_out_fake = self.discriminator(fake_data.detach())
+            d_loss_fake = self.loss_func(d_out_fake, labels)
+            d_loss = (d_loss_real + d_loss_fake) / 2
+
+            # Train generator to fool discriminator
+            labels.fill_(real_label)
+            g_out_fake = self.discriminator(fake_data)
+            # We use 'real' labels for the generator loss
+            g_loss = self.loss_func(g_out_fake, labels)
+
+            # Accumulate summaries
+            d_sum_loss += d_loss.item()
+            g_sum_loss += g_loss.item()
+            d_sum_out_real += d_out_real.mean().item()
+            d_sum_out_fake += d_out_fake.mean().item()
+
+        n_batches = i + 1
+        summary['d_valid_loss'] = d_sum_loss / n_batches
+        summary['g_valid_loss'] = g_sum_loss / n_batches
+        summary['d_valid_out_real'] = d_sum_out_real / n_batches
+        summary['d_valid_out_fake'] = d_sum_out_fake / n_batches
+
+        # Print some information
+        self.logger.debug(' Processed %i batches', n_batches)
+        self.logger.info('  Avg discriminator real output: %.4f', summary['d_valid_out_real'])
+        self.logger.info('  Avg discriminator fake output: %.4f', summary['d_valid_out_fake'])
+        self.logger.info('  Avg discriminator loss: %.4f', summary['d_valid_loss'])
+        self.logger.info('  Avg generator loss: %.4f', summary['g_valid_loss'])
+        return summary
+
+
 
 def get_trainer(**kwargs):
     return GANTrainer(**kwargs)
