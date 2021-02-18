@@ -1,0 +1,20 @@
+trainer: gan
+output_dir: results/dcgan
+
+data_config:
+    name: dummy
+    n_train: 8192
+    n_valid: 8192
+    input_shape: [3, 64, 64]
+    target_shape: null
+    batch_size: 64
+    use_dist_sampler_train: false
+    use_dist_sampler_valid: false
+
+model_config:
+    name: dcgan
+    noise_dim: 64
+    n_channels: 3
+
+train_config:
+    n_epochs: 4
