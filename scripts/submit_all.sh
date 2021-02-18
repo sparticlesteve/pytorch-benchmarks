@@ -65,3 +65,11 @@ sbatch -n 1 scripts/run_cgpu.sh --version v1.5.1
 sbatch -n 1 scripts/run_cgpu.sh --version v1.6.0
 sbatch -n 1 scripts/run_cgpu.sh --version 1.7.0
 sbatch -n 1 scripts/run_cgpu_shifter.sh
+
+# Performance on DGX-A100 with NCCL
+module purge
+module load dgx
+sbatch -n 1 scripts/run_dgx.sh --backend nccl
+sbatch -n 2 scripts/run_dgx.sh --backend nccl
+sbatch -n 4 scripts/run_dgx.sh --backend nccl
+sbatch -n 8 scripts/run_dgx.sh --backend nccl
