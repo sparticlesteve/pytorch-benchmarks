@@ -62,7 +62,7 @@ class GenericTrainer(BaseTrainer):
 
     @torch.no_grad()
     def evaluate(self, data_loader):
-        """"Evaluate the model"""
+        """Evaluate the model"""
         self.model.eval()
         sum_loss = 0
         sum_correct = 0
