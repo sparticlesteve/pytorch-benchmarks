@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH -C gpu
-#SBATCH --gres=gpu:8
-#SBATCH --exclusive
 #SBATCH --ntasks-per-node=8
+#SBATCH --gpus-per-task=1
+#SBATCH --exclusive
 #SBATCH -d singleton
 #SBATCH -c 10
 #SBATCH -t 30
