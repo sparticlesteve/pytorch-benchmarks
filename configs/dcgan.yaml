@@ -3,8 +3,8 @@ output_dir: results/dcgan
 
 data_config:
     name: dummy
-    n_train: 16384
-    n_valid: 16384
+    n_train: 65536
+    n_valid: 65536
     input_shape: [3, 64, 64]
     target_shape: null
     batch_size: 128
