@@ -16,4 +16,5 @@ def config_logging(verbose, log_file=None):
         file_handler = logging.FileHandler(log_file, mode='w')
         file_handler.setLevel(log_level)
         handlers.append(file_handler)
-    logging.basicConfig(level=log_level, format=log_format, handlers=handlers)
+    logging.basicConfig(level=log_level, format=log_format, handlers=handlers,
+                        force=True)

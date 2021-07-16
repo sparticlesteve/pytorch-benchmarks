@@ -27,9 +27,17 @@ def init_workers_nccl_file():
     rank = int(os.environ['SLURM_PROCID'])
     n_ranks = int(os.environ['SLURM_NTASKS'])
     sync_file = _get_sync_file()
-    print('Setting up with sync file', sync_file)
     dist.init_process_group(backend='nccl', world_size=n_ranks, rank=rank,
                             init_method=sync_file)
+    return rank, n_ranks
+
+def init_workers_slurm(backend='nccl', port='29507'):
+    """Initialize workers with NCCL backend and SLURM"""
+    rank = int(os.environ['SLURM_PROCID'])
+    n_ranks = int(os.environ['SLURM_NTASKS'])
+    os.environ['MASTER_ADDR'] = os.environ['SLURM_LAUNCH_NODE_IPADDR']
+    os.environ['MASTER_PORT'] = port
+    dist.init_process_group(backend=backend, world_size=n_ranks, rank=rank)
     return rank, n_ranks
 
 def init_workers_mpi():
@@ -54,7 +62,7 @@ def init_workers(backend=None):
     elif backend == 'mpi':
         rank, n_ranks = init_workers_mpi()
     elif backend == 'nccl':
-        rank, n_ranks = init_workers_nccl_file()
+        rank, n_ranks = init_workers_slurm(backend=backend)
     elif backend == 'gloo':
-        rank, n_ranks = init_workers_gloo_file()
+        rank, n_ranks = init_workers_slurm(backend=backend)
     return rank, n_ranks

@@ -2,6 +2,18 @@
 
 # Launch all benchmark runs for this version
 
+# Scaling on Perlmutter
+sbatch -n 1 scripts/run.sh
+sbatch -n 2 scripts/run.sh
+sbatch -n 4 scripts/run.sh
+sbatch -n 8 scripts/run.sh
+sbatch -n 16 scripts/run.sh
+sbatch -n 32 scripts/run.sh
+sbatch -n 64 scripts/run.sh
+sbatch -n 128 scripts/run.sh
+sbatch -n 256 scripts/run.sh
+sbatch -n 512 scripts/run.sh
+
 # Scaling on Haswell
 sbatch -N 1 scripts/run_hsw.sh
 sbatch -N 2 scripts/run_hsw.sh
