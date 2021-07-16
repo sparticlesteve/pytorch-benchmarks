@@ -10,7 +10,6 @@ import logging
 # Externals
 import yaml
 import numpy as np
-import torch.distributed as dist
 
 # Locals
 from datasets import get_data_loaders
