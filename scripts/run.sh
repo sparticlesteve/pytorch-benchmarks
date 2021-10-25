@@ -2,7 +2,7 @@
 #SBATCH -C gpu
 #SBATCH --ntasks-per-node=4
 #SBATCH --gpus-per-task=1
-#SBATCH --exclusive
+#SBATCH -A nstaff_g
 #SBATCH -d singleton
 #SBATCH -c 32
 #SBATCH -t 30
@@ -12,7 +12,7 @@
 set -e
 
 # Options
-version=1.8.0
+version=1.9.0
 backend=nccl
 models="alexnet resnet50 lstm cnn3d transformer"
 clean=false
