@@ -2,27 +2,15 @@
 PyTorch dataset specifications.
 """
 
+import importlib
+
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 
 def get_datasets(name, **data_args):
-    if name == 'dummy':
-        from .dummy import get_datasets
-        return get_datasets(**data_args)
-    elif name == 'mnist':
-        from .mnist import get_datasets
-        return get_datasets(**data_args)
-    elif name == 'cifar10':
-        from .cifar10 import get_datasets
-        return get_datasets(**data_args)
-    elif name == 'hep_images':
-        from .hep_images import get_datasets
-        return get_datasets(**data_args)
-    elif name == 'rpv_images':
-        from .rpv_images import get_datasets
-        return get_datasets(**data_args)
-    else:
-        raise Exception('Dataset %s unknown' % name)
+    """Factory function for importing datasets from local modules"""
+    module = importlib.import_module('.' + name, 'datasets')
+    return module.get_datasets(**data_args)
 
 def get_data_loaders(name, batch_size, distributed=False,
                      use_dist_sampler_train=True,
