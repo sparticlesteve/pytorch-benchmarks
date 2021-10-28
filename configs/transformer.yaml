@@ -2,9 +2,9 @@ trainer: generic
 output_dir: results/transformer
 
 data_config:
-    name: dummy
-    n_train: 8192
-    n_valid: 8192
+    name: random
+    n_train: 32768
+    n_valid: 32768
     input_shape: [512]
     target_shape: [512]
     input_type: 'label'

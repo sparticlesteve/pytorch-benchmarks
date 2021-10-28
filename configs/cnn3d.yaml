@@ -2,9 +2,9 @@ trainer: generic
 output_dir: results/cnn3d
 
 data_config:
-    name: dummy
-    n_train: 8192
-    n_valid: 8192
+    name: random
+    n_train: 32768
+    n_valid: 32768
     input_shape: [1, 64, 64, 64]
     n_classes: 4
     batch_size: 128

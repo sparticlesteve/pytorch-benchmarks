@@ -2,9 +2,9 @@ trainer: generic
 output_dir: results/lstm
 
 data_config:
-    name: dummy
-    n_train: 32768
-    n_valid: 32768
+    name: random
+    n_train: 131072
+    n_valid: 131072
     input_shape: [64, 512] # (seq_len, input_size)
     n_classes: 4
     batch_size: 128

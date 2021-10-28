@@ -2,7 +2,7 @@ trainer: gan
 output_dir: results/dcgan
 
 data_config:
-    name: dummy
+    name: random
     n_train: 65536
     n_valid: 65536
     input_shape: [3, 64, 64]

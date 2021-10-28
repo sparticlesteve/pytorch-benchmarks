@@ -2,9 +2,9 @@ trainer: generic
 output_dir: results/vgg11
 
 data_config:
-    name: dummy
-    n_train: 4096
-    n_valid: 4096
+    name: random
+    n_train: 32768
+    n_valid: 32768
     input_shape: [3, 224, 224]
     n_classes: 1000
     batch_size: 128
